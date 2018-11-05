@@ -7,7 +7,10 @@ const Activity = require('./Activity');
 
 const ResponseSchema = new Schema({
     content: String,
-    date: Date,
+    date: {
+        type: Date,
+        default: Date.now()
+    },
     activity: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Activity'

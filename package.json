@@ -5,19 +5,20 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index"
+    "start": "nodemon index"
   },
   "author": "Jorge Andres Castro Caraballo",
   "license": "MIT",
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "1.18.3",
+    "crypto": "1.0.1",
     "express": "4.16.4",
     "jwt-simple": "0.5.5",
     "moment": "2.22.2",
     "mongoose": "5.3.9"
   },
   "devDependencies": {
-    "nodemon": "1.18.5"
+    "nodemon": "^1.18.5"
   }
 }
