@@ -17,7 +17,7 @@ function createToken(user){
 function decodeToken(token){
     const decoded = new Promise((resolve, reject)=>{
         try {
-            const payload = jwt.decode(token, config.SECRET_TOKEN)
+            const payload = jwt.decode(token, conf.SECRET_TOKEN)
 
             if(payload.exp <= moment().unix()){
                 reject({
@@ -30,7 +30,7 @@ function decodeToken(token){
         } catch (err){
             reject({
                 status: 500,
-                message: 'Token invalido'
+                message: `token invalido ${err}`
             })
         }
     })

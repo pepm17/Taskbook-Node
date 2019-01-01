@@ -7,10 +7,11 @@ function isAuth(req, res, next){
         return res.status(403).send({message: 'No tienes autorizacion'})
     }
 
-    const token = req.headers.authorization.split(' ')[1]
+    const bearer = req.headers.authorization.split(' ')
+    const token = bearer[1]
     service.decodeToken(token)
     .then(response =>{
-        req.user = response
+        req.userid = response
         next()
     })
     .catch(response =>{

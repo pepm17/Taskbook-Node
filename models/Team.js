@@ -5,7 +5,6 @@ const Schema = mongoose.Schema;
 const User = require('./User');
 
 const TeamSchema = new Schema({
-    _id: mongoose.Types.ObjectId,
     name: String,
     description: String,
     creator: {

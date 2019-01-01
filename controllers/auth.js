@@ -5,6 +5,8 @@ const User = require('../models/User')
 const service = require('../services')
 
 function signUp(req, res){
+    //if(!req.body.email||!req.body.displayName) res.status(500).send({message: 'Correo o nick requeridos'})
+    
     const user = new User({
         email: req.body.email,
         displayName: req.body.displayName
@@ -25,7 +27,7 @@ function signIn(req, res){
         req.user = user
         res.status(200).send({
             message: 'Has logueado correctamente',
-            token: service.createToken(user)
+            token: service.createToken(user) //crea un token y lo envia por mensaje con el objetivo de poder verificarlo en la ruta privada
         })
     })
 }
