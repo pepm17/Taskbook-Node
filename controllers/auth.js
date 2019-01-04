@@ -23,15 +23,17 @@ function signUp(req, res){
 function signIn(req, res){
     User.find({ email: req.body.email}, (err, user)=>{
         if(!user) return res.status(404).send({ message: 'No existe el usuario'})
-        if(err) return res.status(500).send({ message: err})
         bcrypt.compare(req.body.password, user[0].password, function(err, result){
-            //if(!result) return res.status(404).send({ message: 'contraseña incorrecta'})
-            if(err) return res.status(500).send({ message: `Error al realizar la comparacion ${err}`})            
-            req.user = user
-            res.status(200).send({
-                message: 'Has logueado correctamente',
-                token: service.createToken(user) //crea un token y lo envia por mensaje con el objetivo de poder verificarlo en la ruta privada
-            })
+            console.log(user[0].password)
+            if(err) return res.status(500).send({ message: `error al verificar contraseña ${err} user: ${user} result ${result}` })
+            if(result){
+                req.user = user
+                res.status(200).send({
+                    message: 'Has logueado correctamente',
+                    token: service.createToken(user) //crea un token y lo envia por mensaje con el objetivo de poder verificarlo en la ruta privada
+                })
+            }
+            res.status(500).send({message: 'contraseña incorrecta'});
         })
     })
 }

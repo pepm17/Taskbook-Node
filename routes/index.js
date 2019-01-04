@@ -6,14 +6,24 @@ const auth = require('../middlewares/auth')
 const teamCtrl = require('../controllers/TeamCtrl');
 const authCtrl = require('../controllers/auth');
 const userCtrl = require('../controllers/UserCtrl');
-//rutas
 
+//rutas
+api.get('/', (req, res)=>{
+    res.status(200).send({message: 'hola mundo'})
+})
+
+//crud teams
 api.get('/teams', teamCtrl.getTeams);
 api.get('/teams/:teamid', teamCtrl.getTeam);
 api.post('/teams', teamCtrl.postTeam);
+
 api.put('/teams/:teamid', teamCtrl.updateTeam);
 api.delete('/teams/:teamid', teamCtrl.deleteTeam);
 
+//crud activities
+
+
+//crud users
 api.get('/users', auth, userCtrl.getUsers);
 api.get('/users/:userid', auth, userCtrl.getUser);
 api.delete('/users/:userid', userCtrl.deleteUser);
