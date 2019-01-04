@@ -21,10 +21,10 @@ function signUp(req, res){
 }
 
 function signIn(req, res){
-    User.find({ email: req.body.email}, (err, user)=>{
+    User.findOne({ email: req.body.email}, (err, user)=>{
         if(!user) return res.status(404).send({ message: 'No existe el usuario'})
-        bcrypt.compare(req.body.password, user[0].password, function(err, result){
-            console.log(user[0].password)
+        bcrypt.compare(req.body.password, user.password, function(err, result){
+            console.log(user.password)
             if(err) return res.status(500).send({ message: `error al verificar contraseña ${err} user: ${user} result ${result}` })
             if(result){
                 req.user = user
