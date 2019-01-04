@@ -15,7 +15,7 @@ api.put('/teams/:teamid', teamCtrl.updateTeam);
 api.delete('/teams/:teamid', teamCtrl.deleteTeam);
 
 api.get('/users', auth, userCtrl.getUsers);
-api.get('/users/:userid', userCtrl.getUser);
+api.get('/users/:userid', auth, userCtrl.getUser);
 api.delete('/users/:userid', userCtrl.deleteUser);
 api.get('/private', auth, (req, res)=>{
     res.status(200).send({ message: 'Tienes acceso'})
