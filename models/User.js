@@ -10,7 +10,7 @@ const UserSchema = new Schema({
     email: {type: String, lowercase: true, unique: true},
     displayName: String,
     avatar: String,
-    password: {type: String, select: false},
+    password: {type: String}, //se eliminó el seect false debido a que nose podia acceder a la clave para la comparacion con hash
     singnupDate: {type: Date, default: Date.now()},
     lastLogin: Date,
     teams: [{
@@ -26,10 +26,10 @@ UserSchema.pre('save', function (next){
   bcrypt.genSalt(10, (err, salt)=>{
     if(err) return next(err)
 
-    bcrypt.hash(user.password, salt, null, (err, hash)=>{
+    bcrypt.hash(this.password, salt, null, (err, hash)=>{
       if(err) return next(err)
 
-      user.password = hash
+      this.password = hash
       next()
     })
   })
