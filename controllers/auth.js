@@ -12,7 +12,6 @@ function signUp(req, res){
         email: req.body.email,
         displayName: req.body.displayName,
         password: req.body.password
-        
     })
     user.save((err)=>{
         if(err) res.status(500).send({ message: `Error al crear el usuario: ${err}`})
@@ -23,7 +22,6 @@ function signUp(req, res){
 
 function signIn(req, res){
     User.find({ email: req.body.email}, (err, user)=>{
-        if(err) return res.status(500).send({ message: err})
         if(!user) return res.status(404).send({ message: 'No existe el usuario'})
         bcrypt.compare(req.body.password, user[0].password, function(err, result){
             console.log(user[0].password)
