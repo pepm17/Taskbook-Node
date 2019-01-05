@@ -3,17 +3,21 @@
 const Activity = require('../models/Activity')
 
 function getActivity(req, res){
-    Activity.find({team: req.params.teamid, _id: req.params.activityid}, (err, activity)=>{
-        if(err) res.status(500).send({message: `Ha ocurrido un error al realizar la consulta ${err}`})
-        if(!activity) res.status(404).send({message: 'No existen actividades'})
+    Activity.findOne({team: req.params.teamid, _id: req.params.activityid}, (err, activity)=>{
+        if(err) return res.status(500).send({message: `Ha ocurrido un error al realizar la consulta ${err}`})
+        if(!activity) return res.status(404).send({message: 'No existen actividades'})
         res.status(200).send({activity})
     })
 }
 
+function geatAllActivities(req, res){
+    Activity.find({})
+}
+
 function getActivities(req, res){
     Activity.find({team: req.params.teamid}, (err, activities)=>{
-        if(err) res.status(500).send({message: `Ha ocurrido un error al realizar la consulta ${err}`})
-        if(!activities) res.status(404).send({message: 'No existen actividades'})
+        if(err) return res.status(500).send({message: `Ha ocurrido un error al realizar la consulta ${err}`})
+        if(!activities) return res.status(404).send({message: 'No existen actividades'})
         res.status(200).send({activities})
     })
 }
