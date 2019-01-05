@@ -6,10 +6,18 @@ const Schema = mongoose.Schema;
 const ActivitySchema = new Schema({
     title: String,
     description: String,
-    team: {
-        type: mongoose.Schema.Types.ObjectId,
+    _dad: {
+        type: mongoose.Types.ObjectId,
         ref: 'Team'
-    } 
+    },
+    tasks: [{
+        type: mongoose.Types.ObjectId,
+        ref:'Task'
+    }],
+    response: [{
+        type: mongoose.Types.ObjectId,
+        ref: 'Response'
+    }]
 });
 
 module.exports = mongoose.model('Activity', ActivitySchema);

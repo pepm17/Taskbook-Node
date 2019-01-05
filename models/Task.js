@@ -9,14 +9,14 @@ const TaskSchema = new Schema({
     description: String,
     state: boolean,
     limit_date: Date,
-    users = [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
-    }],
-    activity = {
-        type: mongoose.Schema.Types.ObjectId,
+    _dad = {
+        type: mongoose.Types.ObjectId,
         ref: 'Activity'
-    }
+    },
+    users = [{
+        type: mongoose.Types.ObjectId,
+        ref: 'User'
+    }]
 });
 
 module.exports = mongoose.model('Task', TaskSchema);

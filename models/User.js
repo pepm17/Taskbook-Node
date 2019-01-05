@@ -14,7 +14,7 @@ const UserSchema = new Schema({
     singnupDate: {type: Date, default: Date.now()},
     lastLogin: Date,
     teams: [{
-      type: mongoose.Schema.ObjectId,
+      type: mongoose.Types.ObjectId,
       ref: 'Team'
   }]
 });

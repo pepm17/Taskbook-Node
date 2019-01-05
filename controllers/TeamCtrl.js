@@ -18,14 +18,24 @@ function getTeams(req, res){
     });
 }
 
+//tengo que obtener todos mis equipos
+function getMyTeams(req, res){
+    Team.find({users: req.userid}, (err, teams)=>{
+        if(err) return res.status(500).send({message: `Ha ocurrido un error al realizar la consulta ${err}`})
+        if(!teams) return res.status(404).send({message: 'No existen equipos'})
+        res.status(200).send({teams})
+    })
+}
+
 function postTeam(req, res){
     var team = new Team()
     team.name = req.body.name
     team.description = req.body.description
-    team.creator = req.body.userid
+    team.creator = req.body.userid,
+    team.users.push(req.body.userid),
     team.save(team, (err, teamStored)=>{
         if(err) res.status(500).send({message: `error al crear el equipo ${err}`})
-        res.status(200).send({message: 'se ha creado el equipo con exito', teamStored})
+        res.status(200).send({message: 'se ha creado el equipo con exito', team: teamStored})
     })
 }
 

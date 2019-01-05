@@ -8,12 +8,16 @@ const TeamSchema = new Schema({
     name: String,
     description: String,
     creator: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: mongoose.Types.ObjectId,
         ref: 'User'
     },
     users: [{
-        type: mongoose.Schema.ObjectId,
+        type: mongoose.Types.ObjectId,
         ref: 'User'
+    }],
+    activities: [{
+        type: mongoose.Types.ObjectId,
+        ref: 'Activity'
     }]
 });
 

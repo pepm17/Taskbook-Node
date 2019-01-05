@@ -11,12 +11,12 @@ const ResponseSchema = new Schema({
         type: Date,
         default: Date.now()
     },
-    activity: {
-        type: mongoose.Schema.Types.ObjectId,
+    _dad: {
+        type: mongoose.Types.ObjectId,
         ref: 'Activity'
     },
     user: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: mongoose.Types.ObjectId,
         ref: 'User'
     }
 });
