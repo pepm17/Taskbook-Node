@@ -12,10 +12,14 @@ function getActivity(req, res){
 }
 
 function getAllActivitiesUser(req, res){
-    Team.find({users: req.userid}).populate('activities').populate('creator').exec((err, teams)=>{
+    Team.find({users: req.userid}, (err, teams)=>{
         if(err) return res.status(500).send({message: `Ha ocurrido un error al realizar la consulta ${err}`})
         if(!teams) return res.status(404).send({message: 'No existen actividades'})
-        res.status(200).send({teams})
+        Activity.find({activities: teams.id}).populate('_dad', 'name').exec((err, activities)=>{
+            if(err) return res.status(500).send({message: `Ha ocurrido un error al realizar la consulta ${err}`})
+            if(!activities) return res.status(404).send({message: 'No existen actividades'})
+            res.status(200).send({activities})
+        })
     })
 }
 
@@ -47,8 +51,19 @@ function postActivity(req, res){
 }
 
 function updateActivity(req, res){
+    var body = req.body 
     Activity.findById(req.params.activityId, (err, activity)=>{
-        
+        if(err) return res.status(500).send({message: `se produjo un error en la operacion ${err}`})
+        if(!activity) return res.status(404).send({message: 'no existe la actividad'})
+        if(body.title) activity.title = body.title
+        if(body.description) activity.description = body.description
+        if(body._dad) activity._dad = body._dad
+        if(body.task) activity.task.push(body.task)
+        if(body.response) activity.response.push(body.response)
+        activity.save((err, activityUpdate)=>{
+            if(err) return res.status(500).send({message: `Se produjo un error en la operacion de actualizacion ${err}`})
+            res.status(200).send({message: 'Se realizó con exito la actualizacion'})
+        })
     })
 }
 
@@ -65,5 +80,6 @@ module.exports = {
     getAllActivitiesUser,
     getActivities,
     postActivity,
-    deleteActivity
+    deleteActivity,
+    updateActivity
 }
