@@ -20,8 +20,11 @@ api.put('/teams/:teamid', teamCtrl.updateTeam);
 api.delete('/teams/:teamid', teamCtrl.deleteTeam);
 
 //crud activities
-api.get('/activities', actiCtrl.getActivity);
-api.post('/activities/crear', actiCtrl.postActivity);
+api.get('/teams/:teamid/activities', actiCtrl.getActivities);
+api.get('/teams/:teamid/activities/:activityid', actiCtrl.getActivity);
+api.get('/',auth , actiCtrl.getAllActivitiesUser);
+api.post('/teams/:teamid/activities', actiCtrl.postActivity);
+api.delete('/activities/:activityid', actiCtrl.deleteActivity);
 //crud users
 api.get('/users', auth, userCtrl.getUsers);
 api.get('/users/:userid', auth, userCtrl.getUser);

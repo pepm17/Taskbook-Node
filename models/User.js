@@ -12,11 +12,7 @@ const UserSchema = new Schema({
     avatar: String,
     password: {type: String}, //se eliminó el select false debido a que nose podia acceder a la clave para la comparacion con hash
     singnupDate: {type: Date, default: Date.now()},
-    lastLogin: Date,
-    teams: [{
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Team'
-  }]
+    lastLogin: Date
 });
 
 UserSchema.pre('save', function (next){

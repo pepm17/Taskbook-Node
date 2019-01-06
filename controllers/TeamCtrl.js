@@ -3,7 +3,7 @@
 const Team = require('../models/Team')
 
 function getTeam(req, res){
-    Team.findById(req.params.teamid).populate('users').populate('creator').exec((err, team)=>{
+    Team.findById(req.params.teamid).populate('users').populate('creator').populate('activities').exec((err, team)=>{
         if(err) return res.status(500).send({ message: `Se produjo un error al realizar la consulta: ${err}`})
         if(!team) return res.status(404).send({ message: 'El equipo no existe'})
         res.status(200).send({team});
@@ -11,7 +11,7 @@ function getTeam(req, res){
 }
 
 function getTeams(req, res){
-    Team.find({}).populate('users').populate('creator').exec((err, teams)=>{
+    Team.find({}).populate('users').populate('creator').populate('activities').exec((err, teams)=>{
         if(err) return res.status(500).send({message: `Se produjo un error al realizar la consulta ${err}`})
         if(!teams) return res.status(404).send({message: 'No existen equipos'})
         res.status(200).send({teams});
