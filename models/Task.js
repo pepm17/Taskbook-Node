@@ -10,11 +10,11 @@ const TaskSchema = new Schema({
     state: boolean,
     limit_date: Date,
     _dad = {
-        type: mongoose.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'Activity'
     },
     users = [{
-        type: mongoose.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     }]
 });

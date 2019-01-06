@@ -42,3 +42,10 @@ function postActivity(req, res){
         res.status(200).send({message: 'se ha creado la actividad con exito'})
     })
 }
+
+module.exports = {
+    getActivity,
+    getAllActivitiesUser,
+    getActivities,
+    postActivity
+}

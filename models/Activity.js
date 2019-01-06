@@ -7,15 +7,15 @@ const ActivitySchema = new Schema({
     title: String,
     description: String,
     _dad: {
-        type: mongoose.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'Team'
     },
     tasks: [{
-        type: mongoose.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref:'Task'
     }],
     response: [{
-        type: mongoose.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'Response'
     }]
 });
