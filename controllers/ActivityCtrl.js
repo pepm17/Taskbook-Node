@@ -32,18 +32,24 @@ function postActivity(req, res){
     activity.title = req.body.title
     activity.description = req.body.description
     activity._dad = req.params.teamid
-
     activity.save(activity, (err, activityStored)=>{
-        if(err) res.status(500).send({message: `Error al guarda la actividad ${err}`})
-
+        if(err) return res.status(500).send({message: `Error al guarda la actividad ${err}`})
         Team.findById(req.params.teamid, (err, team)=>{
             if(err) return res.status(500).send({ message: `Se produjo un error al realizar la consulta: ${err}`})
-                if(!team) return res.status(404).send({ message: 'El equipo no existe'})
-                team.activities.push(activity)
+            if(!team) return res.status(404).send({ message: 'El equipo no existe'})
+            team.activities.push(activityStored.id)
+            team.save((err, teamUpdate)=>{
+                if(err) return res.status(500).send({message: `Error al actualizar el grupo ${err}`})
+                res.status(200).send({message: 'se realizó con exito la actualizacion'})
+            })
         })
-        res.status(200).send({message: 'se ha creado la actividad con exito'})
+    })    
+}
+
+function updateActivity(req, res){
+    Activity.findById(req.params.activityId, (err, activity)=>{
+        
     })
-    
 }
 
 function deleteActivity(req, res){
