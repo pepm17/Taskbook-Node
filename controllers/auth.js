@@ -7,7 +7,6 @@ const bcrypt = require('bcrypt-nodejs');
 
 function signUp(req, res){
     //if(!req.body.email||!req.body.displayName) res.status(500).send({message: 'Correo o nick requeridos'})
-    
     const user = new User({
         email: req.body.email,
         displayName: req.body.displayName,

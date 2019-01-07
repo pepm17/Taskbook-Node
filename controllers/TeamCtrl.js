@@ -34,7 +34,7 @@ function postTeam(req, res){
     team.creator = req.userid,
     team.users.push(req.userid),
     team.save(team, (err, teamStored)=>{
-        if(err) res.status(500).send({message: `error al crear el equipo ${err}`})
+        if(err) return res.status(500).send({message: `error al crear el equipo ${err}`})
         res.status(200).send({message: 'se ha creado el equipo con exito', team: teamStored})
     })
 }
