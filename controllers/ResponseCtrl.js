@@ -16,7 +16,7 @@ function postResponse(req, res){
 function getResponses(req, res){
 	Response.find({}, (err, responses)=>{
 		if(err) return res.status(500).send({message: `error al buscar comentario ${err}`})
-		if(!response) return res.status(404).send({message: 'No hay comentario'})
+		if(!responses) return res.status(404).send({message: 'No hay comentario'})
         res.status(200).send({responses})
 	})
 }
@@ -43,7 +43,7 @@ function deleteResponse(req, res){
 
 module.exports = {
     postResponse,
-    getResponse,
+    getResponses,
     updateResponse,
     deleteResponse
 }

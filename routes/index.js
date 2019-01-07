@@ -29,10 +29,10 @@ api.put('/teams/:teamid/activities', actiCtrl.updateActivity);
 api.delete('/activities/:activityid', actiCtrl.deleteActivity);
 
 //crud response
-api.get('/', auth, resp.getResponse);
-api.post('/', auth, resp.postResponse);
-api.put('/', resp.updateResponse);
-api.delete('/', resp.deleteResponse);
+api.get(/response/, respCtrl.getResponses);
+api.post('/response', auth, respCtrl.postResponse);
+api.put('/:responseid', respCtrl.updateResponse);
+api.delete('/:responseid', respCtrl.deleteResponse);
 
 //crud users
 api.get('/users', auth, userCtrl.getUsers);
