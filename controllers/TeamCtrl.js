@@ -74,6 +74,7 @@ function deleteTeam(req, res){
 module.exports = {
     getTeam,
     getTeams,
+    getMyTeams,
     postTeam,
     updateTeam,
     deleteTeam
