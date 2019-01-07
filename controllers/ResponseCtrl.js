@@ -5,7 +5,7 @@ const Response = require('../models/Response')
 function postResponse(req, res){
 	var response = new Response()
 	response.content = req.body.content
-	response._dad = req.body._dad
+	response._dad = req.params.activityid
 	response.user = req.userid
 	response.save(response, (err, responseStored)=>{
 		if(err) return res.status(500).send({message: `error al enviar comentario ${err}`})
@@ -13,8 +13,24 @@ function postResponse(req, res){
 	})
 }
 
+function getResponse(req, res){
+	Response.findById(req.params.responseid, (err, responses)=>{
+		if(err) return res.status(500).send({message: `error al buscar comentario ${err}`})
+		if(!responses) return res.status(404).send({message: 'No hay comentario'})
+        res.status(200).send({responses})
+	})
+}
+
 function getResponses(req, res){
 	Response.find({}, (err, responses)=>{
+		if(err) return res.status(500).send({message: `error al buscar comentario ${err}`})
+		if(!responses) return res.status(404).send({message: 'No hay comentario'})
+        res.status(200).send({responses})
+	})
+}
+
+function getResponsesActivity(req, res){
+	Response.find({_dad: req.params.activityid}, (err, responses)=>{
 		if(err) return res.status(500).send({message: `error al buscar comentario ${err}`})
 		if(!responses) return res.status(404).send({message: 'No hay comentario'})
         res.status(200).send({responses})
@@ -42,8 +58,10 @@ function deleteResponse(req, res){
 }
 
 module.exports = {
-    postResponse,
-    getResponses,
+	postResponse,
+	getResponse,
+	getResponses,
+	getResponsesActivity,
     updateResponse,
     deleteResponse
 }
