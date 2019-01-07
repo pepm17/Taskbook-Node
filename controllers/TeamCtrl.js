@@ -6,7 +6,7 @@ function getTeam(req, res){
     Team.findById(req.params.teamid).populate('users').populate('creator').populate('activities').exec((err, team)=>{
         if(err) return res.status(500).send({ message: `Se produjo un error al realizar la consulta: ${err}`})
         if(!team) return res.status(404).send({ message: 'El equipo no existe'})
-        res.status(200).send({team});
+        res.status(200).send({team: team, iscreator: req.iscreator});
     });
 }
 
@@ -55,7 +55,7 @@ function updateTeam(req, res){
         if(req.body.description) teamFound.description = req.body.description;
         //if(req.body.creator) teamFound.creator = req.body.creator; No creo que se pueda modificar esto, pero por si acaso
         if(req.body.users) teamFound.users.push(req.users);
-        if(req.body.activities) teamFound.activities.push(req.body.activities);
+        //if(req.body.activities) teamFound.activities.push(req.body.activities);
         teamFound.save((err, teamUpdated)=>{
             if(err) return res.status(500).send({message: `se produjo un error en la operacion de actualizacion ${err}`})
             res.status(200).send({message: 'se realizó con exito la actualizacion'})

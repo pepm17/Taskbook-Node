@@ -3,6 +3,7 @@
 const express = require('express');
 const api = express.Router();
 const auth = require('../middlewares/auth');
+const validator = require('../middlewares/validator')
 const teamCtrl = require('../controllers/TeamCtrl');
 const authCtrl = require('../controllers/auth');
 const userCtrl = require('../controllers/UserCtrl');
@@ -15,7 +16,7 @@ const respCtrl = require('../controllers/ResponseCtrl');
 
 //crud teams
 api.get('/teams', teamCtrl.getTeams);
-api.get('/teams/:teamid', teamCtrl.getTeam);
+api.get('/teams/:teamid',auth , validator, teamCtrl.getTeam);
 api.post('/teams', auth, teamCtrl.postTeam);
 api.put('/teams/:teamid', teamCtrl.updateTeam);
 api.delete('/teams/:teamid', teamCtrl.deleteTeam);
