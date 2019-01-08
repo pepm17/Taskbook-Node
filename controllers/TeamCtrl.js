@@ -6,7 +6,7 @@ function getTeam(req, res){
     Team.findById(req.params.teamid).populate('users').populate('creator').populate('activities').exec((err, team)=>{
         if(err) return res.status(500).send({ message: `Se produjo un error al realizar la consulta: ${err}`})
         if(!team) return res.status(404).send({ message: 'El equipo no existe'})
-        res.status(200).send({team: team, iscreator: req.iscreator});
+        res.status(200).send({team: team, iscreatorTeam: req.iscreatorTeam});
     });
 }
 
@@ -39,23 +39,17 @@ function postTeam(req, res){
     })
 }
 
-/*function updateTeam(req, res){
+function updateTeam(req, res){
     Team.findByIdAndUpdate(req.params.teamid, req.body, (err, teamUpdated)=>{
         if(err) return res.status(500).send({message: `se produjo un error en la operacion ${err}`})
         if(!teamUpdated) return res.status(404).send({message: 'no existe el equipo'})
         res.status(200).send({message: 'se realizó con exito la actualizacion'})
     })
-}*/
+}
 
-function updateTeam(req, res){
+function pushUserTeam(req, res){
     Team.findById(req.params.teamid, (err, teamFound)=>{
-        if(err) return res.status(500).send({message: `se produjo un error en la operacion ${err}`})
-        if(!teamFound) return res.status(404).send({message: 'no existe el equipo'})
-        if(req.body.name) teamFound.name = req.body.name;
-        if(req.body.description) teamFound.description = req.body.description;
-        //if(req.body.creator) teamFound.creator = req.body.creator; No creo que se pueda modificar esto, pero por si acaso
-        if(req.body.users) teamFound.users.push(req.users);
-        //if(req.body.activities) teamFound.activities.push(req.body.activities);
+        if(req.body.user) teamFound.users.push(req.body.user);
         teamFound.save((err, teamUpdated)=>{
             if(err) return res.status(500).send({message: `se produjo un error en la operacion de actualizacion ${err}`})
             res.status(200).send({message: 'se realizó con exito la actualizacion'})
@@ -77,5 +71,6 @@ module.exports = {
     getMyTeams,
     postTeam,
     updateTeam,
+    pushUserTeam,
     deleteTeam
 }

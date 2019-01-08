@@ -35,6 +35,7 @@ function postActivity(req, res){
     var activity = new Activity()
     activity.title = req.body.title
     activity.description = req.body.description
+    activity.creator = req.userid
     activity._dad = req.params.teamid
     activity.save(activity, (err, activityStored)=>{
         if(err) return res.status(500).send({message: `Error al guarda la actividad ${err}`})

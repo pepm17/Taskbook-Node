@@ -16,23 +16,24 @@ const respCtrl = require('../controllers/ResponseCtrl');
 
 //crud teams
 api.get('/teams', teamCtrl.getTeams);
-api.get('/teams/:teamid',auth , validator, teamCtrl.getTeam);
+api.get('/myteams',auth, teamCtrl.getMyTeams);
+api.get('/teams/:teamid',auth, validator.isMemberTeam , validator.isCreatorTeam, teamCtrl.getTeam);
 api.post('/teams', auth, teamCtrl.postTeam);
-api.put('/teams/:teamid', teamCtrl.updateTeam);
-api.delete('/teams/:teamid', teamCtrl.deleteTeam);
+api.put('/teams/:teamid', auth, teamCtrl.updateTeam);
+api.delete('/teams/:teamid', auth, teamCtrl.deleteTeam);
 
 //crud activities
-api.get('/teams/:teamid/activities', actiCtrl.getActivities);
-api.get('/teams/:teamid/activities/:activityid', actiCtrl.getActivity);
+api.get('/teams/:teamid/activities', auth, validator.isMemberTeam, actiCtrl.getActivities);
+api.get('/teams/:teamid/activities/:activityid', auth, actiCtrl.getActivity);
 api.get('/', auth, actiCtrl.getAllActivitiesUser);
-api.post('/teams/:teamid/activities', actiCtrl.postActivity);
-api.put('/teams/:teamid/activities', actiCtrl.updateActivity);
-api.delete('/activities/:activityid', actiCtrl.deleteActivity);
+api.post('/teams/:teamid/activities', auth, actiCtrl.postActivity);
+api.put('/teams/:teamid/activities/:activityid', auth, actiCtrl.updateActivity);
+api.delete('/teams/:teamid/activities/:activityid', auth, actiCtrl.deleteActivity);
 
 //crud response
-api.get('/teams/:teamid/activities/:activityid/responses/', respCtrl.getResponsesActivity);
+api.get('/teams/:teamid/activities/:activityid/responses/', auth, respCtrl.getResponsesActivity);
 api.post('/teams/:teamid/activities/:activityid/responses/', auth, respCtrl.postResponse);
-api.put('/teams/:teamid/activities/:activityid/responses/:responseid', respCtrl.updateResponse);
+api.put('/teams/:teamid/activities/:activityid/responses/:responseid', auth, respCtrl.updateResponse);
 api.delete('/teams/:teamid/activities/:activityid/responses/:responseid', respCtrl.deleteResponse);
 
 //crud users

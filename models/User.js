@@ -8,7 +8,7 @@ const Team = require('./Team');
 
 const UserSchema = new Schema({
     email: {type: String, lowercase: true, unique: true},
-    displayName: String,
+    displayName: {type: String, unique: true},
     avatar: String,
     password: {type: String}, //se eliminó el select false debido a que nose podia acceder a la clave para la comparacion con hash
     singnupDate: {type: Date, default: Date.now()},
