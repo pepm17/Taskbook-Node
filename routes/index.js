@@ -19,6 +19,7 @@ api.get('/teams', teamCtrl.getTeams);
 api.get('/myteams',auth, teamCtrl.getMyTeams);
 api.get('/teams/:teamid',auth, validator.isMemberTeam , validator.isCreatorTeam, teamCtrl.getTeam);
 api.post('/teams', auth, teamCtrl.postTeam);
+api.put('/teams/:teamid/users', auth, validator.isMemberTeam , validator.isCreatorTeam, teamCtrl.pushUserTeam);
 api.put('/teams/:teamid', auth, teamCtrl.updateTeam);
 api.delete('/teams/:teamid', auth, teamCtrl.deleteTeam);
 

@@ -43,17 +43,24 @@ function updateTeam(req, res){
     Team.findByIdAndUpdate(req.params.teamid, req.body, (err, teamUpdated)=>{
         if(err) return res.status(500).send({message: `se produjo un error en la operacion ${err}`})
         if(!teamUpdated) return res.status(404).send({message: 'no existe el equipo'})
-        res.status(200).send({message: 'se realizó con exito la actualizacion'})
+        res.status(201).send({message: 'se realizó con exito la actualizacion'})
     })
 }
 
 function pushUserTeam(req, res){
     Team.findById(req.params.teamid, (err, teamFound)=>{
-        if(req.body.user) teamFound.users.push(req.body.user);
-        teamFound.save((err, teamUpdated)=>{
-            if(err) return res.status(500).send({message: `se produjo un error en la operacion de actualizacion ${err}`})
-            res.status(200).send({message: 'se realizó con exito la actualizacion'})
-        })
+        var resul = false
+        teamFound.users.forEach(element => {
+            if(element == req.body.userid) resul = true
+        });
+        if(resul == false){
+            teamFound.users.push(req.body.userid);
+            teamFound.save((err, teamUpdated)=>{
+                if(err) return res.status(500).send({message: `se produjo un error en la operacion de actualizacion ${err}`})
+                res.status(201).send({message: 'se realizó con exito la actualizacion'})
+            })
+        } 
+        res.status(201).send({message: 'El usuario ya está'})
     })
 }
 

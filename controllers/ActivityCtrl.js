@@ -45,7 +45,7 @@ function postActivity(req, res){
             team.activities.push(activityStored.id)
             team.save((err, teamUpdate)=>{
                 if(err) return res.status(500).send({message: `Error al actualizar el grupo ${err}`})
-                res.status(200).send({message: 'se realizó con exito la actualizacion'})
+                res.status(200).send({message: 'Se creó la actividad con éxito'})
             })
         })
     })    
@@ -53,18 +53,10 @@ function postActivity(req, res){
 
 function updateActivity(req, res){
     var body = req.body 
-    Activity.findById(req.params.activityId, (err, activity)=>{
-        if(err) return res.status(500).send({message: `se produjo un error en la operacion ${err}`})
+    Activity.findByIdAndUpdate(req.params.activityId, (err, activity)=>{
+        if(err) return res.status(500).send({message: `Se produjo un error en la operacion de actualizacion ${err}`})
         if(!activity) return res.status(404).send({message: 'no existe la actividad'})
-        if(body.title) activity.title = body.title
-        if(body.description) activity.description = body.description
-        if(body._dad) activity._dad = body._dad
-        if(body.task) activity.task.push(body.task)
-        if(body.response) activity.response.push(body.response)
-        activity.save((err, activityUpdate)=>{
-            if(err) return res.status(500).send({message: `Se produjo un error en la operacion de actualizacion ${err}`})
-            res.status(200).send({message: 'Se realizó con exito la actualizacion'})
-        })
+        res.status(201).send({message: 'Se realizó con exito la actualizacion'})
     })
 }
 
