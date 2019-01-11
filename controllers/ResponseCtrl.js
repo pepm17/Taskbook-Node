@@ -40,7 +40,7 @@ function getResponsesActivity(req, res){
 function updateResponse(req, res){
 	Response.findByIdAndUpdate(req.params.responseId, (err, response)=>{
 		if(!response) return res.status(404).send({message: 'No existe el comentario'})	
-		if(err) res.status(500).send({message: `error al buscar comentario ${err}`})
+		if(err) return res.status(500).send({message: `error al buscar comentario ${err}`})
 		res.status(201).send({message: 'Se ha actualizado el mensaje con exito'})
 	})
 }

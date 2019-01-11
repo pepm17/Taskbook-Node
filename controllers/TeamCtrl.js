@@ -52,12 +52,12 @@ function pushUserTeam(req, res){
         var resul = false
         teamFound.users.forEach(element => {
             if(element == req.body.userid) resul = true
-        });
+        });//he buscado si hay un usuario en el equipo
         if(resul == false){
             teamFound.users.push(req.body.userid);
             teamFound.save((err, teamUpdated)=>{
                 if(err) return res.status(500).send({message: `se produjo un error en la operacion de actualizacion ${err}`})
-                res.status(201).send({message: 'se realizó con exito la actualizacion'})
+                return res.status(201).send({message: 'se realizó con exito la actualizacion'})
             })
         } 
         res.status(201).send({message: 'El usuario ya está'})

@@ -14,11 +14,11 @@ function getActivity(req, res){
 function getAllActivitiesUser(req, res){
     Team.find({users: req.userid}, (err, teams)=>{
         if(err) return res.status(500).send({message: `Ha ocurrido un error al realizar la consulta ${err}`})
-        if(!teams) return res.status(404).send({message: 'No existen actividades'})
+        else if(!teams) return res.status(404).send({message: 'No existen actividades'})
         Activity.find({activities: teams.id}).populate('_dad', 'name').exec((err, activities)=>{
             if(err) return res.status(500).send({message: `Ha ocurrido un error al realizar la consulta ${err}`})
-            if(!activities) return res.status(404).send({message: 'No existen actividades'})
-            res.status(200).send({activities})
+            else if(!activities) return res.status(404).send({message: 'No existen actividades'})
+            else res.status(200).send({activities})
         })
     })
 }
@@ -38,7 +38,7 @@ function postActivity(req, res){
     activity.creator = req.userid
     activity._dad = req.params.teamid
     activity.save(activity, (err, activityStored)=>{
-        if(err) return res.status(500).send({message: `Error al guarda la actividad ${err}`})
+        if(err) return res.status(500).send({message: `Error al guardar la actividad ${err}`})
         Team.findById(req.params.teamid, (err, team)=>{
             if(err) return res.status(500).send({ message: `Se produjo un error al realizar la consulta: ${err}`})
             if(!team) return res.status(404).send({ message: 'El equipo no existe'})
