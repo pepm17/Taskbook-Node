@@ -28,8 +28,8 @@ api.get('/teams/:teamid/activities', auth, validator.isMemberTeam, actiCtrl.getA
 api.get('/teams/:teamid/activities/:activityid', auth, actiCtrl.getActivity);
 api.get('/', auth, actiCtrl.getAllActivitiesUser);
 api.post('/teams/:teamid/activities', auth, actiCtrl.postActivity);
-api.put('/teams/:teamid/activities/:activityid', auth, actiCtrl.updateActivity);
-api.delete('/teams/:teamid/activities/:activityid', auth, actiCtrl.deleteActivity);
+api.put('/activities/:activityid', auth, actiCtrl.updateActivity);
+api.delete('activities/:activityid', auth, actiCtrl.deleteActivity);
 
 //crud response
 api.get('/teams/:teamid/activities/:activityid/responses/', auth, respCtrl.getResponsesActivity);
