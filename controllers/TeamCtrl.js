@@ -20,7 +20,7 @@ function getTeams(req, res){
 
 //tengo que obtener todos mis equipos
 function getMyTeams(req, res){
-    Team.find({users: req.userid}, (err, teams)=>{
+    Team.find({users: req.userid}).populate('creator', 'displayName').exec((err, teams)=>{
         if(err) return res.status(500).send({message: `Ha ocurrido un error al realizar la consulta ${err}`})
         if(!teams) return res.status(404).send({message: 'No existen equipos'})
         res.status(200).send({teams})
