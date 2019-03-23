@@ -51,10 +51,9 @@ function postActivity(req, res){
     })    
 }
 
-function updateActivity(req, res){
-    var body = req.body 
-    Activity.findByIdAndUpdate(req.params.activityId, (err, activity)=>{
-        if(err) return res.status(500).send({message: `Se produjo un error en la operacion de actualizacion ${err}`})
+function updateActivity(req, res){ 
+    Activity.findByIdAndUpdate(req.params.id, req.body, (err, activity)=>{
+        if(err) return res.status(500).send({message: `Se produjo un error en la operacion {err}`})
         if(!activity) return res.status(404).send({message: 'no existe la actividad'})
         res.status(201).send({message: 'Se realizó con exito la actualizacion'})
     })
